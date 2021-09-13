@@ -42,7 +42,7 @@
         function start(){
             const url = window.location.href;
             const pos = url.indexOf("=");
-            const userID = url.substring(pos);
+            const userID = url.substring(pos+1);
             document.getElementById("userID").innerHTML = userID;
         }
 
