@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <title>Post</title>
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="post-text-area">
+            <textarea id="post-text"></textarea>
+        </div>
+
+        <hr/>
+
+        <div class="media-view">
+            <div class="media-preview" id="view">
+                <label class="add-media" for="files" id="add">
+                    <i class="fas fa-plus-circle"></i>
+                    <input type="file"  id="files" multiple />
+                </label>
+            </div>
+        </div>
+
+        <div class="btn">
+            <div class="send">
+                <button id="btnSend">Post</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+      document.getElementById("files").addEventListener("change",add);
+            function add(){
+                const files = document.getElementById("files").files;
+                document.getElementById("add").style.display = "none";
+                var lastFile = files.length - 1;
+                
+                for(let i = 0; i < files.length; i++){
+                    const reader = new FileReader();
+                    reader.addEventListener("load", function(){
+
+                        const type = files[i].type.split("/");
+                        console.log(type[0] == "image" )
+                            if(type[0] == "image"){
+                                if(i !== lastFile){
+                                  document.getElementById("view").innerHTML += `<img src="${this.result}" />`;
+                                }else{
+                                    document.getElementById("view").innerHTML += `<img src="${this.result}" />
+                                                                                  <button class="add-media2"  onClick="loadPage()">
+                                                                                    <i class="fas fa-plus-circle"></i>
+                                                                                
+                                                                                   </button> `;
+                                }
+                            }else if(type[0] === "video"){
+                                if(i !== lastFile){
+                                document.getElementById("view").innerHTML += `<video >
+                                                                                <source src="${this.result}" type="${files[i].type}"> 
+                                                                            </video>`;
+                                }else{
+                                    document.getElementById("view").innerHTML += `<video >
+                                                                                     <source src="${this.result}" type="${files[i].type}"> 
+                                                                                  </video>
+                                                                                  <button class="add-media2" onClick="loadPage()">
+                                                                                    <i class="fas fa-plus-circle"></i>
+                                                                                    
+                                                                                   </button>`;
+                                }
+                            }
+                        });
+                
+                        reader.readAsDataURL(files[i]);
+                }
+                
+            }
+
+            function loadPage(){
+                location.reload();
+            }
+    </script>
+</body>
+</html>
