@@ -9,11 +9,11 @@
     <title>Post</title>
 </head>
 
-<body>
+<body onload="start()">
 
     <div class="main">
         <div class="post-text-area">
-            <textarea id="post-text"></textarea>
+            <textarea id="post-text"><p class="userID"></p></textarea>
         </div>
 
         <hr/>
@@ -36,6 +36,13 @@
     </div>
 
     <script>
+        
+        function start(){
+            const url = window.location.href;
+            const pos = url.indexOf("=");
+            const userID = url.substring(pos);
+            document.getElementById("userID").innerHTML = userID;
+        }
 
       document.getElementById("files").addEventListener("change",add);
             function add(){
